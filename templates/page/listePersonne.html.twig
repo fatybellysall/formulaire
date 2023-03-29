@@ -4,19 +4,13 @@
 
 {% block body %}
 
-<div class="container-fluid">
-    <div class="col-lg-8 mx-auto shadow py-5">
-      <div class="row py-4">
-        <h2>Liste une Personne!</h2>
-        <hr>
-        <div class="container-fluid">
+<h2>Liste une Personne!</h2>
+  <ul>
+    {% for user in PersonneEntity %}
 
+        <li>{{user.nom}}</li>
        
-     
-       </div>
-      </div>
-    </div>
-</div>
-     
+        {% endfor%}
+  </ul>
 
 {% endblock %}

@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Form\PersonnesFormType;
 use App\Entity\PersonneEntity;
+use App\Form\ModifierFormType;
+use App\Entity\Modifier;
 use App\Controller\createView;
 // use App\Controller\EntityManagerInterface;
 
@@ -33,9 +35,7 @@ class PageController extends AbstractController
     {
 
         // $PersonneEntity = $this->getRepository(PersonneEntity::class)->findALL();
-        return $this->render('page/index.html.twig', [
-            'controller_name' => 'PageController',
-        ]);
+        return $this->render('page/index.html.twig');
     }
 
     #[Route('/ajout', name: 'app_ajoutPersonne')]
@@ -44,6 +44,7 @@ class PageController extends AbstractController
 
         //on crée un "un nouveau persones"
         $PersonneEntity = new PersonneEntity();
+        
         $entityManager=$this->mr->getManager();
 
         //on crée un formulaire
@@ -65,9 +66,60 @@ class PageController extends AbstractController
             return $this->redirectToRoute('app_accueil');
         }
 
-        return $this->render('page/listePersonne.html.twig',[
+        return $this->render('page/ajoutPersonne.html.twig',[
 
             'personneForm' =>$personneForm->createView()
         ]);
+        
     }
+
+    #[Route('/modifier', name: 'app_modifierPersonne')]
+    public function modifierPersonne(Request $request)
+    {
+
+        //on crée un "un nouveau persones"
+        $Modifier = new Modifier();
+        $entityManager=$this->mr->getManager();
+
+        //on crée un formulaire
+        $modifierForm = $this->createForm(ModifierFormType::class, $Modifier);
+
+      //on traite la formulaire
+       $modifierForm->handleRequest($request);
+
+
+        if($modifierForm->isSubmitted() &&$modifierForm->isValid()){
+
+            $Modifier =$modifierForm->getData();
+
+           $entityManager->persist($Modifier);
+
+
+           $entityManager-> flush();
+
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        return $this->render('page/modifierPersonne.html.twig',[
+
+            'modifierForm' =>$modifierForm->createView()
+        ]);
+        
+    }
+
+    #[Route ('/liste', name: 'app_listePersonne')]
+    public function List(ManagerRegistry $mr): Response
+    {
+        $allModifier = $mr->getRepository(Modifier::class)->findALL();
+
+        return $this-> render ('page/listePersonne.html.twig',[
+            
+            'allModifier' => $allModifier
+
+        ]);
+    }
+    
+
+    
+
 }

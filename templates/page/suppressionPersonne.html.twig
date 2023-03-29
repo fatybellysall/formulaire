@@ -4,21 +4,52 @@
 
 {% block body %}
 
-<div class="container-fluid">
-    <div class="col-lg-8 mx-auto shadow py-5">
-      <div class="row py-4">
-        <h2>Supprimer une Personne!</h2>
-        <hr>
-        <div class="container-fluid">
+<ul class="list-group list-group-numbered">
 
-         {{form(personneForm)}}
-         
-        
-     
-       </div>
+  {% for Liste in listes %}
+   <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+            <div class="fw-bold">{{liste.nom}}</div>
+          {{liste.prenom}}
       </div>
-    </div>
-</div>
+      
+  </li>
+
+  {% else %}
+      <p>Aucun liste a été trouvé.</p>
+  {% endfor %}		
      
 
 {% endblock %}
+
+{% endblock %}
+// #[Route('/liste', name: 'app_listePersonne')]
+    // public function listePersonne(ManagerRegistry $mr)
+    // {
+
+    //     $listePerson =$this->mr->getRepository(PersonneEntityRepository::class)->findOneBy(['id' => $id]);
+
+    //         $listes = new listes();
+
+    //         $form = $this->createForm(PersonneFormType::class, $listes);
+
+    //         $form->handleRequest( $request);
+
+    //         if($form->isSubmitted() && $form->isValid()){
+    //             $listes = $form->getData();
+
+    //             $listes->setlistePerson($listePerson);
+
+    //             $this->entityManager->persist($listes);
+
+    //             ($form->isSubmitted() && $form->isValid());
+    //     $liste = $this->$mr->getRepository(PersonneEntityRepository::class)->findALL();
+    //     return $this->render('page/listePersonne.html.twig',[
+
+    //     'form'=> $form,
+    //     'liste'=> $liste
+
+    //     ]);
+    // }
+    
+    // }
