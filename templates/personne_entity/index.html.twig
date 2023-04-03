@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire | Inprocess!!{% endblock %}
+
+{% block body %}
+    <h1>La liste des Etudiants</h1>
+    <br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <a href="{{ path('app_personne_entity_new') }}">Ajouter un Etudiant</a>
+            <br>
+            <br>
+        {% for personne_entity in personne_entities %}
+            <tr>
+                <td>{{ personne_entity.id }}</td>
+                <td>{{ personne_entity.prenom }}</td>
+                <td>{{ personne_entity.nom }}</td>
+                <td>{{ personne_entity.email }}</td>
+                <td>{{ personne_entity.adresse }}</td>
+                <td>{{ personne_entity.telephone }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_personne_entity_delete', {'id': personne_entity.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <a href="{{ path('app_personne_entity_show', {'id': personne_entity.id}) }}">show</a>
+                        <a href="{{ path('app_personne_entity_edit', {'id': personne_entity.id}) }}">edit</a>
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ personne_entity.id) }}">
+                        <button class="btn text-primary">Delete</button>
+                    </form>
+                    
+                </td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

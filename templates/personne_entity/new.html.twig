@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Etudiant</h1>
+
+    {{ include('personne_entity/_form.html.twig') }}
+
+    <a href="{{ path('app_personne_entity_index') }}">back to list</a>
+{% endblock %}

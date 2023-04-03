@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affiche{% endblock %}
+
+{% block body %}
+    <h1>Affiche un Etudiant</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ personne_entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ personne_entity.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ personne_entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ personne_entity.email }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ personne_entity.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ personne_entity.telephone }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_personne_entity_index') }}">back to list</a>
+
+    <a href="{{ path('app_personne_entity_edit', {'id': personne_entity.id}) }}">edit</a>
+
+    {{ include('personne_entity/_delete_form.html.twig') }}
+{% endblock %}
